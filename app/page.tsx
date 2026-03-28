@@ -1,6 +1,10 @@
+"use client";
+import { useAuth, UserButton, SignInButton } from "@clerk/nextjs";
 import UploadBox from "@/components/UploadBox";
 
 export default function Home() {
+  const { isSignedIn } = useAuth();
+
   return (
     <main style={{
       minHeight: "100vh",
@@ -13,48 +17,41 @@ export default function Home() {
     }}>
 
       {/* Header */}
-      <div style={{ textAlign: "center", marginBottom: "48px" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", marginBottom: "16px" }}>
-          <div style={{
-            width: "48px", height: "48px", background: "linear-gradient(135deg, #22d3ee, #6366f1)",
-            borderRadius: "12px", display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: "24px", boxShadow: "0 0 20px rgba(34,211,238,0.4)"
-          }}>⚡</div>
-          <h1 style={{
-            fontSize: "42px", fontWeight: "800", margin: 0,
-            background: "linear-gradient(135deg, #22d3ee, #6366f1, #a855f7)",
-            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-            letterSpacing: "-1px"
-          }}>ClipForge</h1>
+      <div style={{ width: "100%", maxWidth: "680px", display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div style={{ width: "40px", height: "40px", background: "linear-gradient(135deg, #22d3ee, #6366f1)", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px" }}>⚡</div>
+          <h1 style={{ fontSize: "28px", fontWeight: "800", margin: 0, background: "linear-gradient(135deg, #22d3ee, #6366f1)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>ClipForge</h1>
         </div>
-        <p style={{ color: "#64748b", fontSize: "16px", margin: 0, letterSpacing: "0.5px" }}>
-          AI-powered gaming clip editor
-        </p>
-        <div style={{ display: "flex", gap: "8px", justifyContent: "center", marginTop: "16px" }}>
-          {["🎮 Gaming", "🤖 AI Powered", "⚡ Fast"].map((tag) => (
-            <span key={tag} style={{
-              background: "rgba(34,211,238,0.1)", border: "1px solid rgba(34,211,238,0.2)",
-              color: "#22d3ee", padding: "4px 12px", borderRadius: "20px", fontSize: "12px"
-            }}>{tag}</span>
-          ))}
+        <div>
+          {isSignedIn ? (
+            <UserButton afterSignOutUrl="/" />
+          ) : (
+            <SignInButton mode="modal">
+              <button style={{ background: "linear-gradient(135deg, #22d3ee, #6366f1)", color: "#fff", fontWeight: "600", padding: "8px 20px", borderRadius: "8px", border: "none", cursor: "pointer", fontSize: "14px" }}>
+                Sign In
+              </button>
+            </SignInButton>
+          )}
         </div>
       </div>
 
-      {/* Main Card */}
-      <div style={{
-        width: "100%", maxWidth: "680px",
-        background: "rgba(255,255,255,0.02)",
-        border: "1px solid rgba(34,211,238,0.15)",
-        borderRadius: "24px", padding: "32px",
-        boxShadow: "0 0 40px rgba(34,211,238,0.05), 0 20px 60px rgba(0,0,0,0.5)"
-      }}>
-        <UploadBox />
-      </div>
-
-      {/* Footer */}
-      <p style={{ color: "#1e293b", marginTop: "40px", fontSize: "13px" }}>
-        ClipForge © 2025 — Built for Gamers
-      </p>
+      {/* Main Content */}
+      {isSignedIn ? (
+        <div style={{ width: "100%", maxWidth: "680px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(34,211,238,0.15)", borderRadius: "24px", padding: "32px", boxShadow: "0 0 40px rgba(34,211,238,0.05)" }}>
+          <UploadBox />
+        </div>
+      ) : (
+        <div style={{ width: "100%", maxWidth: "680px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(34,211,238,0.15)", borderRadius: "24px", padding: "60px 32px", textAlign: "center" }}>
+          <div style={{ fontSize: "64px", marginBottom: "24px" }}>🎮</div>
+          <h2 style={{ color: "#fff", fontSize: "24px", fontWeight: "700", margin: "0 0 12px" }}>Welcome to ClipForge</h2>
+          <p style={{ color: "#64748b", fontSize: "16px", margin: "0 0 32px" }}>Sign in to start creating AI-powered gaming highlights</p>
+          <SignInButton mode="modal">
+            <button style={{ background: "linear-gradient(135deg, #22d3ee, #6366f1)", color: "#fff", fontWeight: "700", padding: "14px 40px", borderRadius: "12px", border: "none", cursor: "pointer", fontSize: "16px" }}>
+              ⚡ Get Started — Sign In
+            </button>
+          </SignInButton>
+        </div>
+      )}
 
     </main>
   );
