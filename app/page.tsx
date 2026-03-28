@@ -22,7 +22,8 @@ export default function Home() {
         </div>
         <div>
           {isSignedIn ? (
-            <UserButton afterSignOutUrl="/" />
+            <UserButton />
+```
           ) : (
             <SignInButton mode="modal">
               <button style={{ background: "linear-gradient(135deg, #22d3ee, #6366f1)", color: "#fff", fontWeight: "600", padding: "8px 20px", borderRadius: "8px", border: "none", cursor: "pointer", fontSize: "14px" }}>
