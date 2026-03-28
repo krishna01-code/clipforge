@@ -15,8 +15,6 @@ export default function Home() {
       padding: "40px 20px",
       fontFamily: "'Inter', sans-serif",
     }}>
-
-      {/* Header */}
       <div style={{ width: "100%", maxWidth: "680px", display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <div style={{ width: "40px", height: "40px", background: "linear-gradient(135deg, #22d3ee, #6366f1)", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px" }}>⚡</div>
@@ -35,9 +33,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Main Content */}
       {isSignedIn ? (
-        <div style={{ width: "100%", maxWidth: "680px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(34,211,238,0.15)", borderRadius: "24px", padding: "32px", boxShadow: "0 0 40px rgba(34,211,238,0.05)" }}>
+        <div style={{ width: "100%", maxWidth: "680px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(34,211,238,0.15)", borderRadius: "24px", padding: "32px" }}>
           <UploadBox />
         </div>
       ) : (
@@ -52,7 +49,6 @@ export default function Home() {
           </SignInButton>
         </div>
       )}
-
     </main>
   );
 }
