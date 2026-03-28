@@ -14,9 +14,3 @@ export default function SignInPage() {
   );
 }
 ```
-
-**Ctrl+S** dabao! Phir terminal mein:
-```
-git add .
-git commit -m "fix: sign-in page cleaned"
-git push
