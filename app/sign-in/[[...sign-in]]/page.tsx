@@ -15,8 +15,8 @@ export default function SignInPage() {
 }
 ```
 
-Ctrl+S dabao! Phir terminal mein:
+**Ctrl+S** dabao! Phir terminal mein:
 ```
 git add .
-git commit -m "fix: remove invalid SignedOut import"
+git commit -m "fix: sign-in page cleaned"
 git push
