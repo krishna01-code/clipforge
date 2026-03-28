@@ -36,7 +36,7 @@ export default function UploadBox() {
       formData.append("upload_preset", "clipforge_unsigned");
       formData.append("resource_type", "video");
 
-      const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+     const cloudName = "ddhf9why6";
       const uploadRes = await fetch(
         `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`,
         { method: "POST", body: formData }
