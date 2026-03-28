@@ -7,6 +7,12 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -16,17 +22,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No file received" }, { status: 400 });
     }
 
-    // File ko buffer mein convert karo
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Cloudinary pe upload karo
     const result = await new Promise((resolve, reject) => {
       cloudinary.uploader
         .upload_stream(
           {
             resource_type: "video",
             folder: "clipforge",
+            chunk_size: 6000000,
           },
           (error, result) => {
             if (error) reject(error);
