@@ -14,7 +14,16 @@ export default function VideoEditor({ videoUrl, onClose }: VideoEditorProps) {
   const [trimEnd, setTrimEnd] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [filter, setFilter] = useState("none");
 
+  const filters: Record<string, string> = {
+  none: "none",
+  cinematic: "contrast(1.2) saturate(0.8) brightness(0.9)",
+  neon: "hue-rotate(270deg) saturate(2) brightness(1.2)",
+  gaming: "contrast(1.4) saturate(1.5) hue-rotate(90deg)",
+  dark: "brightness(0.7) contrast(1.3) saturate(0.9)",
+  warm: "sepia(0.4) brightness(1.1) saturate(1.2)",
+};
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -102,7 +111,7 @@ export default function VideoEditor({ videoUrl, onClose }: VideoEditorProps) {
         <video
           ref={videoRef}
           src={videoUrl}
-          style={{ width: "100%", borderRadius: "12px", background: "#000", maxHeight: "350px" }}
+          style={{ width: "100%", borderRadius: "12px", background: "#000", maxHeight: "350px", filter: filters[filter] }}
         />
 
         {/* Time Display */}
@@ -164,6 +173,22 @@ export default function VideoEditor({ videoUrl, onClose }: VideoEditorProps) {
           <p style={{ color: "#22d3ee", margin: 0, fontSize: "14px", fontWeight: "600" }}>
             📎 Clip: {formatTime(trimStart)} → {formatTime(trimEnd)} ({formatTime(trimEnd - trimStart)} long)
           </p>
+        </div>
+        {/* Filters */}
+        <div style={{ marginTop: "16px" }}>
+          <p style={{ color: "#94a3b8", fontSize: "13px", marginBottom: "8px" }}>🎨 Filters</p>
+          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+            {Object.keys(filters).map((f) => (
+              <button key={f} onClick={() => setFilter(f)} style={{
+                padding: "6px 14px", borderRadius: "8px", border: "none",
+                cursor: "pointer", fontSize: "13px", fontWeight: "600",
+                background: filter === f ? "linear-gradient(135deg, #22d3ee, #6366f1)" : "rgba(255,255,255,0.08)",
+                color: filter === f ? "#fff" : "#94a3b8",
+              }}>
+                {f === "none" ? "Original" : f === "cinematic" ? "🎬 Cinematic" : f === "neon" ? "💜 Neon" : f === "gaming" ? "🎮 Gaming" : f === "dark" ? "🌙 Dark" : "🔥 Warm"}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Buttons */}
