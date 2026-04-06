@@ -15,6 +15,9 @@ export default function VideoEditor({ videoUrl, onClose }: VideoEditorProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [filter, setFilter] = useState("none");
+  const [text, setText] = useState("");
+const [textColor, setTextColor] = useState("#ffffff");
+const [textPosition, setTextPosition] = useState("bottom");
 
   const filters: Record<string, string> = {
   none: "none",
@@ -108,11 +111,29 @@ export default function VideoEditor({ videoUrl, onClose }: VideoEditorProps) {
         </div>
 
         {/* Video Preview */}
-        <video
-          ref={videoRef}
-          src={videoUrl}
-          style={{ width: "100%", borderRadius: "12px", background: "#000", maxHeight: "350px", filter: filters[filter] }}
-        />
+        <div style={{ position: "relative", borderRadius: "12px", overflow: "hidden" }}>
+          <video
+            ref={videoRef}
+            src={videoUrl}
+            style={{ width: "100%", borderRadius: "12px", background: "#000", maxHeight: "350px", filter: filters[filter] }}
+          />
+          {text && (
+            <div style={{
+              position: "absolute",
+              left: 0, right: 0,
+              top: textPosition === "top" ? "10px" : textPosition === "center" ? "50%" : "auto",
+              bottom: textPosition === "bottom" ? "10px" : "auto",
+              transform: textPosition === "center" ? "translateY(-50%)" : "none",
+              textAlign: "center", padding: "0 16px",
+            }}>
+              <span style={{
+                color: textColor, fontSize: "20px", fontWeight: "800",
+                textShadow: "2px 2px 8px rgba(0,0,0,0.9)",
+                background: "rgba(0,0,0,0.3)", padding: "4px 12px", borderRadius: "6px"
+              }}>{text}</span>
+            </div>
+          )}
+        </div>
 
         {/* Time Display */}
         <div style={{ display: "flex", justifyContent: "space-between", color: "#64748b", fontSize: "13px", marginTop: "12px" }}>
@@ -187,6 +208,35 @@ export default function VideoEditor({ videoUrl, onClose }: VideoEditorProps) {
               }}>
                 {f === "none" ? "Original" : f === "cinematic" ? "🎬 Cinematic" : f === "neon" ? "💜 Neon" : f === "gaming" ? "🎮 Gaming" : f === "dark" ? "🌙 Dark" : "🔥 Warm"}
               </button>
+            ))}
+          </div>
+        </div>
+        {/* Text Overlay Controls */}
+        <div style={{ marginTop: "16px" }}>
+          <p style={{ color: "#94a3b8", fontSize: "13px", marginBottom: "8px" }}>📝 Text Overlay</p>
+          <input
+            type="text"
+            placeholder="Type your text here..."
+            value={text}
+            onChange={e => setText(e.target.value)}
+            style={{
+              width: "100%", padding: "10px 14px", background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(34,211,238,0.2)", borderRadius: "8px",
+              color: "#fff", fontSize: "14px", outline: "none", boxSizing: "border-box"
+            }}
+          />
+          <div style={{ display: "flex", gap: "8px", marginTop: "10px", alignItems: "center" }}>
+            <label style={{ color: "#94a3b8", fontSize: "12px" }}>Color:</label>
+            <input type="color" value={textColor} onChange={e => setTextColor(e.target.value)}
+              style={{ width: "36px", height: "28px", border: "none", borderRadius: "6px", cursor: "pointer", background: "none" }}
+            />
+            <label style={{ color: "#94a3b8", fontSize: "12px", marginLeft: "8px" }}>Position:</label>
+            {["top", "center", "bottom"].map(pos => (
+              <button key={pos} onClick={() => setTextPosition(pos)} style={{
+                padding: "4px 10px", borderRadius: "6px", border: "none", cursor: "pointer", fontSize: "12px",
+                background: textPosition === pos ? "linear-gradient(135deg, #22d3ee, #6366f1)" : "rgba(255,255,255,0.08)",
+                color: textPosition === pos ? "#fff" : "#94a3b8", fontWeight: "600"
+              }}>{pos}</button>
             ))}
           </div>
         </div>
