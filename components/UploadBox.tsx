@@ -1,4 +1,4 @@
-"use client";
+import VideoEditor from "./VideoEditor";
 import { useRef, useState } from "react";
 
 export default function UploadBox() {
@@ -11,7 +11,7 @@ export default function UploadBox() {
   const [uploadedUrl, setUploadedUrl] = useState<string | null>(null);
   const [highlights, setHighlights] = useState<any[]>([]);
   const [transcript, setTranscript] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);const [showEditor, setShowEditor] = useState(false);
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -154,6 +154,21 @@ export default function UploadBox() {
           <p style={{ color: "#64748b", fontSize: "11px", fontWeight: "600", letterSpacing: "1px", textTransform: "uppercase", margin: "0 0 10px" }}>Full Transcript</p>
           <p style={{ color: "#475569", fontSize: "13px", lineHeight: "1.8", margin: 0 }}>{transcript}</p>
         </div>
+      )}
+      {uploadedUrl && (
+        <button onClick={() => setShowEditor(true)} style={{
+          marginTop: "16px", width: "100%", padding: "14px",
+          background: "rgba(34,211,238,0.1)",
+          border: "1px solid rgba(34,211,238,0.3)",
+          color: "#22d3ee", fontWeight: "700", fontSize: "15px",
+          borderRadius: "12px", cursor: "pointer"
+        }}>
+          ✂️ Open Video Editor
+        </button>
+      )}
+
+      {showEditor && uploadedUrl && (
+        <VideoEditor videoUrl={uploadedUrl} onClose={() => setShowEditor(false)} />
       )}
     </div>
   );
