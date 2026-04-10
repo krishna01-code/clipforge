@@ -78,6 +78,9 @@ const [textPosition, setTextPosition] = useState("bottom");
           videoUrl,
           startTime: trimStart,
           endTime: trimEnd,
+          overlayText: text,
+overlayColor: textColor,
+overlayPosition: textPosition,
         }),
       });
       const data = await res.json();
