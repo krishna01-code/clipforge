@@ -5,6 +5,7 @@ import { useAuth } from "@clerk/nextjs";
 
 export default function UploadBox() {
   const { userId } = useAuth();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
