@@ -12,7 +12,7 @@
     "@clerk/nextjs": "^7.0.7",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-progress": "^1.1.8",
-    "@supabase/supabase-js": "^2.100.1",
+    "@supabase/supabase-js": "^2.103.0",
     "assemblyai": "^4.29.0",
     "bullmq": "^5.71.1",
     "class-variance-authority": "^0.7.1",

@@ -1,8 +1,10 @@
 import VideoEditor from "./VideoEditor";
 import { useRef, useState } from "react";
+import { supabase } from "@/lib/supabase";
+import { useAuth } from "@clerk/nextjs";
 
 export default function UploadBox() {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const { userId } = useAuth();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -59,6 +61,14 @@ export default function UploadBox() {
 
       setHighlights(processData.highlights || []);
       setTranscript(processData.transcript || "");
+      // Save to Supabase
+      if (userId) {
+        await supabase.from("clips").insert({
+          user_id: userId,
+          video_url: cloudUrl,
+          transcript: processData.transcript || "",
+        });
+      }
     } catch (err: any) {
       setError(err.message || "Something went wrong!");
     } finally {
