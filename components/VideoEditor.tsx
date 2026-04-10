@@ -102,7 +102,7 @@ const [textPosition, setTextPosition] = useState("bottom");
       <div style={{
         background: "#0d1117", borderRadius: "20px",
         border: "1px solid rgba(34,211,238,0.2)",
-        width: "100%", maxWidth: "800px", padding: "24px"
+        width: "100%", maxWidth: "800px", padding: "24px", overflowY: "auto", maxHeight: "90vh"
       }}>
         {/* Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
